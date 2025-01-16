@@ -17,6 +17,7 @@ namespace TraversalCoreProje.Controllers
         [HttpPost]
         public IActionResult AddComment(Comment p)
         {
+
             p.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             p.CommentState = true;
             //p.DestinationID = 

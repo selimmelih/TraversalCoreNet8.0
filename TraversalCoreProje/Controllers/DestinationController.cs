@@ -17,6 +17,16 @@ namespace TraversalCoreProje.Controllers
 
         public IActionResult DestinationDetails(int id)
         {
+
+            // Veritabanında DestinationID'nin var olup olmadığını kontrol et
+            var destinationExists = destinationManager?.TGetByID(id);
+
+
+            // Eğer DestinationID geçerli değilse, hata mesajı göster
+            if (destinationExists == null)
+            {
+                return NotFound("Böyle Bir linke sahip rotamız yoktur. Lütfen tekrar deneyin.");
+            }
             ViewBag.i = id;
             var values = destinationManager.TGetByID(id);
             return View(values);
