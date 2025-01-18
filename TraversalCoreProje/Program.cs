@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using TraversalCoreProje.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,8 @@ builder.Services.AddControllersWithViews();
 // var app e kadar olan kýsým identity auth ile ilgili önemli bir kýsým.
 builder.Services.AddDbContext<Context>();
 
-builder.Services.AddIdentity<AppUser, AppRole>()
-	.AddEntityFrameworkStores<Context>()
+builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>()
+    .AddEntityFrameworkStores<Context>()
 	.AddDefaultTokenProviders();
 
 // Add MVC support (with controllers and views)
