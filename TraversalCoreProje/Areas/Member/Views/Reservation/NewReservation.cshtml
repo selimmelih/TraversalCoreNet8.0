@@ -1,0 +1,58 @@
+﻿@model EntityLayer.Concrete.Reservation
+@{
+    ViewData["Title"] = "NewReservation";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+
+}
+
+<!-- SweetAlert (Eski Versiyon) CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet" />
+
+<h1>Yeni Rezervasyon Sayfası</h1>
+
+<!-- Popup içeriği -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Hoşgeldiniz!</h3>
+        <p>Sayfa yüklendiğinde açılan pop-up örneği.</p>
+    </div>
+</div>
+
+<form method="post">
+    <div class="form-group">
+        @Html.Label("Lokasyon")
+        @Html.DropDownListFor(x => x.Destination, (List<SelectListItem>)ViewBag.v, new {@class="form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Kişi Sayısı")
+        <input  type="text" asp-for="PersonCount" class="form-control"/>
+    </div>
+    <div class="form-group">
+        @Html.Label("Tarih")
+        <input  type="date" asp-for="ReservationDate" class="form-control"/>
+    </div>
+    <div class="form-group">
+        @Html.Label("Varsa Eklemek İstedikleriniz")
+        <input type="text" asp-for="Description" class="form-control"/>
+    </div>
+    <button class="btn btn-outline-success">Rezervasyon Yap</button>
+</form>
+
+
+<!-- SweetAlert (Eski Versiyon) JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script>
+    // Sayfa tamamen yüklendiğinde SweetAlert pop-up'ını göster
+    document.addEventListener('DOMContentLoaded', function () {
+        swal({
+            title: "Hoşgeldiniz!",
+            text: "Rezervasyonunuz başlangıçta onay bekliyor şekilde eklenecektir. <b>Sizinle iletişime geçeceğiz.</b>",
+            type: "warning",  // success, error, warning, info gibi seçenekler
+            confirmButtonText: "Tamam",
+            html:true
+        });
+    });
+</script>
