@@ -5,7 +5,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Font Awesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 @await Html.PartialAsync("~/Views/MemberLayoutPartial/_HeaderPartial.cshtml")
 
 
@@ -15,7 +16,7 @@
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     @await Html.PartialAsync("~/Views/MemberLayoutPartial/_Navbar2Partial.cshtml")
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid">
       @RenderBody()
       @await Html.PartialAsync("~/Views/MemberLayoutPartial/_FooterPartial.cshtml")
 
