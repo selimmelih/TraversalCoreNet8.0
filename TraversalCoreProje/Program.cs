@@ -22,8 +22,9 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentit
     .AddEntityFrameworkStores<Context>()
 	.AddDefaultTokenProviders();
 
-builder.Services.AddScoped<ICommentService, CommentManager>();
-builder.Services.AddScoped<ICommentDal, EfCommentDal>();
+
+builder.Services.ContainerDependencies();
+// tüm efdal iservice gibi şeyleri tek bir yerde topladık businesslayer/container icindeki extensions class ında . tek tek burada cagırmaktan kurtulduk
 
 builder.Services.AddScoped<IDestinationService, DestinationManager>();
 builder.Services.AddScoped<IDestinationDal, EfDestinationDal>();
