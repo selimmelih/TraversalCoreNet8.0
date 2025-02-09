@@ -2,18 +2,28 @@ using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
+using BusinessLayer.Container;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using TraversalCoreProje.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddLogging(x =>
+{
+	x.ClearProviders();
+	x.SetMinimumLevel(LogLevel.Debug);
+	x.AddDebug();
+	x.AddFile($"{Directory.GetCurrentDirectory()}\\LogFile\\log.txt", LogLevel.Debug);
+});
 
 // var app e kadar olan kýsým identity auth ile ilgili önemli bir kýsým.
 builder.Services.AddDbContext<Context>();
@@ -24,10 +34,8 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentit
 
 
 builder.Services.ContainerDependencies();
-// tÃ¼m efdal iservice gibi ÅŸeyleri tek bir yerde topladÄ±k businesslayer/container icindeki extensions class Ä±nda . tek tek burada cagÄ±rmaktan kurtulduk
+// tüm efdal iservice gibi yapýlarý tek bir yerde topladýk businesslayer/container icindeki extensions class ýnda . tek tek burada cagýrmaktan kurtulduk
 
-builder.Services.AddScoped<IDestinationService, DestinationManager>();
-builder.Services.AddScoped<IDestinationDal, EfDestinationDal>();
 
 // Add MVC support (with controllers and views)
 builder.Services.AddControllersWithViews();
@@ -52,6 +60,8 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();
@@ -62,13 +72,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Login}/{action=SignIn}/{id?}");
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
-});
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
