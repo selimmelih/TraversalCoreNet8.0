@@ -11,5 +11,8 @@ namespace DataAccessLayer.Abstract
     {
         // crud islemleri interfacede yapılır
 
+        void ChangeToTrueByGuide(int id);
+        void ChangeToFalseByGuide(int id);
+
     }
 }
