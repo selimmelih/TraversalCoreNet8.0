@@ -25,6 +25,9 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentit
 builder.Services.AddScoped<ICommentService, CommentManager>();
 builder.Services.AddScoped<ICommentDal, EfCommentDal>();
 
+builder.Services.AddScoped<IDestinationService, DestinationManager>();
+builder.Services.AddScoped<IDestinationDal, EfDestinationDal>();
+
 // Add MVC support (with controllers and views)
 builder.Services.AddControllersWithViews();
 
