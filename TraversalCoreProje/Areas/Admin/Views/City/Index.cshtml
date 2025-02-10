@@ -1,24 +1,71 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h1>Şehir - Ülke İşlemleri</h1>
-<br /><br />
-
+<br />
+<br />
+<div>
 <button type="button" id="btngetlist" class="btn btn-outline-info">Şehir Listesi</button>
-<button type="button" id="btngetbyid" class="btn btn-outline-primary">Şehir Getir</button>
+<button type="button" id="btngetbyid" class="btn btn-outline-primary">Şehir Getir ID</button>
 <button type="button" id="btnaddcity" class="btn btn-outline-success">Şehir Ekle</button>
 <button type="button" id="btnupdatecity" class="btn btn-outline-warning">Şehir Güncelle</button>
-<button type="button" id="btndeletecity" class="btn btn-outline-danger">Şehir Getir</button>
-
-<br /><br />
+<button type="button" id="btndeletecity" class="btn btn-outline-danger">Şehir Sil</button>
+</div>
+<br />
+<br />
 
 <div id="citylist">
     buraya şehirler gelecek
 </div>
-<script>
+
+<br />
+<br />
+
+<div>
+    <input type="text" id="txtid" placeholder="Şehir ID Değerini Giriniz." class="form-control" />
+</div>
+
+<br />
+
+<div>
+    <input type="text" id="txtcityid" placeholder="Silinecek Şehir ID Değerini Giriniz." class="form-control" />
+</div>
+
+<br />
+<br />
+
+<div>
+    <input type="text" id="txtcityeditid" placeholder="Güncellenecek Şehir ID Değerini Giriniz." class="form-control" /><br />
+    <input type="text" id="txtcityname" placeholder="Güncellenecek Şehir Adı Değerini Giriniz." class="form-control" /><br />
+    <input type="text" id="txtdaynightname" placeholder="Güncellenecek Gün / Gece Değerini Giriniz." class="form-control" /><br />
+    <input type="text" id="txtpricename" placeholder="Güncellenecek Fiyat Değerini Giriniz." class="form-control" /><br />
+</div>
+
+
+<br />
+<br />
+
+<div id="destinationbyid">
+
+</div>
+<br />
+<br />
+
+<div>
+    <input type="text" id="txtcity" placeholder="Şehir Adını Giriniz." class="form-control" />
+    <br />
+    <input type="text" id="txtdaynight" placeholder="Gün - Gece Sayısı Giriniz." class="form-control" />
+    <br />
+    <input type="text" id="txtprice" placeholder="Fiyat Giriniz." class="form-control" />
+    <br />
+    <input type="text" id="txtcapacity" placeholder="Konaklayacak Kişi Sayısı Giriniz." class="form-control" />
+</div>
+
+
+<script type="text/javascript">
+    // Get List
     $("#btngetlist").click(function () {
         $.ajax({
             contentType: "application/json",
@@ -28,13 +75,97 @@
             success: function (func) {
                 let w = jQuery.parseJSON(func);
                 console.log(w);
-                let tableHtml = "<table class = table table-bordered> <tr><th>Şehir Id </th> <th>Şehir Adı </th> <th>Ülke Adı</th> </tr>";
+                let tableHtml = "<table class = table table-bordered> <tr><th>Şehir ID</th><th>Şehir Adı </th> <th>Gün / Gece </th> <th>Fiyat</th> </tr>";
                 $.each(w, (index, value) => {
-                    tableHtml += `<tr><td>${value.CityID}</td> <td>${value.CityName}</td> <td>${value.CityCountry}</td> </tr>`
+                    tableHtml += `<tr><td>${value.DestinationID}</td> <td>${value.City}</td> <td>${value.DayNight}</td> <td>${value.Price} ₺</td> </tr>`
                 });
                 tableHtml += "</table>";
                 $("#citylist").html(tableHtml);
             }
         });
     });
+
+    // Add City
+    $("#btnaddcity").click(function () {
+
+        let cityValues = {
+            City: $("#txtcity").val(),
+            DayNight: $("#txtdaynight").val(),
+            Price: $("#txtprice").val(),
+            Capacity: $("#txtcapacity").val()
+        };
+        $.ajax({
+            type: "Post",
+            url: "/Admin/City/AddCityDestination/",
+            data: cityValues,
+            success: function (func) {
+                let result = jQuery.parseJSON(func);
+                alert("Şehir - Rota Başarılı Bir Şekilde Eklendi.");
+            }
+        });
+    });
+
+    // Get City By Id
+    $("#btngetbyid").click(x => {
+        let id = $("#txtid").val();
+
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "GET",
+            url: "/Admin/City/GetCityById/",
+            data: { DestinationID: id },
+            success: function (func2) {
+                let result = jQuery.parseJSON(func2);
+                console.log(result);
+                let htmlstr = `<table class="table table-bordered"><tr><th>Şehir Adı </th><th>Gün - Gece </th><th>Fiyatı </th></tr><tr><td>${result.City}</td><td>${result.DayNight}</td><td>${result.Capacity}</td></table>`;
+                $("#destinationbyid").html(htmlstr);
+            },
+            error: function () {
+                // Hata durumunda "Böyle bir şehir bulunamadı" mesajını göster
+                let errorMessage = `<table class="table table-bordered">
+                                       <tr><td colspan="3" style="text-align: center; color: red; font-weight: bold;">Böyle bir şehir bulunamadı.</td></tr>
+                                     </table>`;
+
+                $("#destinationbyid").html(errorMessage);
+            }
+        });
+    });
+
+    // Delete City by Id
+    $("#btndeletecity").click(x => {
+        let id = $("#txtcityid").val();
+        console.log($("#txtcityid").val()); // Bu, ID'yi alıp konsola yazdırır
+
+        $.ajax({
+            url: "/Admin/City/DeleteCity/",
+            data: { DestinationID: id },
+            type: "Post",
+            dataType: "json",
+            success: function (func4) {
+                alert("Kayıt silindi.");
+            }
+        });
+    });
+
+    // Update City by Id
+
+    $("#btnupdatecity").click(function () {
+        let values = {
+            DestinationID: $("#txtcityeditid").val(),
+            City: $("#txtcityname").val(),
+            DayNight: $("#txtdaynightname").val(),
+            Price: $("#txtpricename").val()
+        };
+
+        $.ajax({
+            type:"post",
+            url:"/Admin/City/UpdateCity/",
+            data:values,
+            success: function (fun5) {
+                alert("Güncelleme işlemi tamamlandı.")
+            }
+        })
+    })
+
 </script>
