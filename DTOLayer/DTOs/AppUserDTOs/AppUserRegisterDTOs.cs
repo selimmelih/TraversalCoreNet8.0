@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.AppUserDTOs
 {
-    public class AppUserRegisterDTO
+    public class AppUserRegisterDTOs
     {
         public string? Name { get; set; }
         public string? Surname { get; set; }
