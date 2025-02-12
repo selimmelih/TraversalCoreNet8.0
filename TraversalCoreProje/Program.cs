@@ -1,15 +1,10 @@
-using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
-using DataAccessLayer.Abstract;
-using DataAccessLayer.Concrete;
 using BusinessLayer.Container;
-using DataAccessLayer.EntityFramework;
+using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 using TraversalCoreProje.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,9 +31,11 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentit
 builder.Services.ContainerDependencies();
 // tüm efdal iservice gibi yapýlarý tek bir yerde topladýk businesslayer/container icindeki extensions class ýnda . tek tek burada cagýrmaktan kurtulduk
 
+builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.CustomerValidator();
 // Add MVC support (with controllers and views)
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 
 // Add Authorization Policy for authenticated users
 builder.Services.AddMvc(options =>
@@ -72,6 +69,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Login}/{action=SignIn}/{id?}");
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
