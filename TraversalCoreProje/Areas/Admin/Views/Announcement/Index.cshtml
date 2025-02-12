@@ -1,4 +1,4 @@
-﻿@model List<AnnouncementListViewModel>
+﻿@model List<AnnouncementListDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -25,3 +25,4 @@
         </tr>
     }
 </table>
+<a href="/Admin/Announcement/AddAnnouncement/" class="btn btn-outline-success">Duyuru Ekle</a>
