@@ -1,0 +1,27 @@
+﻿@model List<AnnouncementListViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h1>Duyurular Listesi</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>İçerik</th>
+        <th>Detaylar</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        count++;
+        <tr>
+            <td>@count</td>
+            <td>@item.Title</td>
+            <td>@item.Content</td>
+            <td><a href="#" class="btn btn-outline-dark">Detaylar</a></td>
+        </tr>
+    }
+</table>
