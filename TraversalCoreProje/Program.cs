@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using TraversalCoreProje.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentit
     .AddEntityFrameworkStores<Context>()
 	.AddDefaultTokenProviders();
 
+builder.Services.AddHttpClient();
 
 builder.Services.ContainerDependencies();
 // tüm efdal iservice gibi yapýlarý tek bir yerde topladýk businesslayer/container icindeki extensions class ýnda . tek tek burada cagýrmaktan kurtulduk
