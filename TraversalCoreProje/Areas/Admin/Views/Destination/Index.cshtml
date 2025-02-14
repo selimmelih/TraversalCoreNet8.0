@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
 }
 
 <h1>Tur Rotaları</h1>
@@ -20,8 +21,9 @@
     </tr>
     @foreach(var item in Model)
     {
+        count++;
         <tr>
-            <td>@item.DestinationID</td>
+            <td>@count</td>
             <td>@item.City</td>
             <td>@item.Price</td>
             <td>@item.Description</td>
