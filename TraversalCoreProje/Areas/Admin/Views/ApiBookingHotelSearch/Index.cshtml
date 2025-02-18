@@ -1,0 +1,46 @@
+﻿@model ApiBookingHotelSearchViewModel
+
+@{
+    ViewData["Title"] = "Otel Rezervasyonları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h1>Booking API Otel Rezervasyon Sayfası</h1>
+
+<h3>Arama Yapılan Şehir: Paris/Fransa</h3>
+
+@if (Model != null && Model.data != null && Model.data.hotels != null && Model.data.hotels.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Otel Adı</th>
+                <th>Otel Puanı</th>
+                <th>Otel Değerlendirmesi</th>
+                <th>Detaylar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.data.hotels)
+            {
+                count++;
+                var hotelProperty = item.property; // Property1 sınıfındaki veriler
+                <tr>
+                    <td>@count</td>
+                    <td>@hotelProperty.name</td>
+                    <td>@hotelProperty.reviewScore</td>
+                    <td>@hotelProperty.reviewScoreWord</td>
+                    <td><a href="@Url.Action("Details", "Hotel", new { id = hotelProperty.id })" class="btn btn-outline-info">Detaylar</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Otel bilgisi bulunamadı.
+    </div>
+}
