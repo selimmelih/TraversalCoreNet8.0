@@ -1,0 +1,47 @@
+﻿@model List<ApiMovieViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Api IMDB TOP 100 Film Listesi</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>Film Adı</th>
+        <th>IMDB Puanı</th>
+        <th>Yapım Yılı</th>
+        <th>Görsel</th>
+        <th>Fragman</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <th>@item.rank</th>
+            <td>@item.title</td>
+            <td>@item.rating</td>
+            <td>@item.year</td>
+            <td><img src="@item.image" style="max-width:50px;max-height:50px;" /></td>
+            <td>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#youTubeModal" data-thevideo="@item.trailer">
+                    <i class='bx bx-movie-play'></i> &nbsp;
+                    Fragman
+                </button>
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+<div class="modal fade" id="youTubeModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <iframe height="350" src=""></iframe>
+        </div>
+    </div>
+</div>
+
+//popup modalda YouTube videosunu açabilmeniz için vermeniz gereken script url'si
+<script src="~/sneat-1.0.0/assets/js/ui-modals.js"></script>
