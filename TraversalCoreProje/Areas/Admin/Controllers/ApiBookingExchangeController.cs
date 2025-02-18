@@ -30,7 +30,6 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
                 var values = JsonConvert.DeserializeObject<ApiBookingExchangeViewModel2>(body);
 
                 return View(values.data.exchange_rates);
-                Console.WriteLine(body);
             }
         }
     }
