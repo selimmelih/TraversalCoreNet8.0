@@ -1,0 +1,56 @@
+﻿@model AccountViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Unit Of Work Personel Prim Transferi</h3>
+
+<form method="post">
+    <label>Gönderen Kişi ID</label>
+    <input type="text" asp-for="SenderID" class="form-control"/>
+    <br />
+    <label>Alıcı Kişi ID</label>
+    <input type="text" asp-for="ReceiverID" class="form-control"/>
+    <br />
+    <label>Miktar</label>
+    <input type="text" asp-for="Amount" class="form-control"/>
+    <br />
+    <button class="btn btn-outline-primary">Hesaba Aktar</button>
+</form>
+
+<!-- Modal -->
+@if (ViewBag.OldSenderBalance != null && ViewBag.OldReceiverBalance != null)
+{
+    <div class="modal" tabindex="-1" role="dialog" id="balanceModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transfer İşlemi Tamamlandı</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Gönderen Kişi: @ViewBag.SenderName</strong> Eski Bakiyesi: @ViewBag.OldSenderBalance, Yeni Bakiyesi: @ViewBag.NewSenderBalance</p>
+                    <p><strong>Alıcı Kişi: @ViewBag.ReceiverName</strong> Eski Bakiyesi: @ViewBag.OldReceiverBalance, Yeni Bakiyesi: @ViewBag.NewReceiverBalance</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Show the modal on page load
+        $(document).ready(function () {
+            $('#balanceModal').modal('show');
+        });
+    </script>
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript (Make sure this comes after jQuery) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

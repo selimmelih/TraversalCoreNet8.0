@@ -19,6 +19,7 @@ namespace DataAccessLayer.Concrete
         // s takısı almıs hali DB tablo hali
         // karısmaması icin böyle yapılır
         // code first oldugu icin bu asagıdaki kodlar ile buradaki tabloları propları DB Ye yazdırmaya yarar.
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<About2> Abouts2 { get; set; }
         public DbSet<Contact> Contacts { get; set; }
