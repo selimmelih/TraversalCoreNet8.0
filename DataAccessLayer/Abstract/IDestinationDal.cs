@@ -11,6 +11,7 @@ namespace DataAccessLayer.Abstract
     {
         // crud islemleri interfacede yapılır
 
+        public Destination GetDestinationWithGuide(int id);
 
     }
 }
