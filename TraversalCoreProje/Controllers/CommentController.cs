@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TraversalCoreProje.Controllers
@@ -10,7 +11,7 @@ namespace TraversalCoreProje.Controllers
         CommentManager commentManager = new CommentManager(new EfCommentDal());
 
         [HttpGet]
-        public PartialViewResult AddComment()
+        public async Task<PartialViewResult> AddComment()
         {
             return PartialView();
         }
@@ -19,8 +20,7 @@ namespace TraversalCoreProje.Controllers
         {
 
             p.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            p.CommentState = true;
-            //p.DestinationID = 
+            p.CommentState = true;            
             commentManager.TAdd(p);
             return RedirectToAction("DestinationDetails", "Destination", new { id = p.DestinationID });
         }
