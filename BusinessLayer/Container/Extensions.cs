@@ -3,10 +3,12 @@ using BusinessLayer.Abstract.AbstractUow;
 using BusinessLayer.Concrete;
 using BusinessLayer.Concrete.ConcreteUow;
 using BusinessLayer.ValidationRules;
+using BusinessLayer.ValidationRules.ContactUsValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using DataAccessLayer.UnifOfWork;
 using DTOLayer.DTOs.AnnouncementDTOs;
+using DTOLayer.DTOs.ContactDTOs;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -55,7 +57,7 @@ namespace BusinessLayer.Container
         public static void CustomerValidator(this IServiceCollection services)
         {
             services.AddTransient<IValidator<AnnouncementAddDto>, AnnouncementValidator>(); // ekleme isleminde fluent validator ozelligini kullanabilmek icin gerekli diyelim.
-
+            services.AddTransient<IValidator<SendMessageDto>, SendContactUsValidator>();
         }
     }
 }

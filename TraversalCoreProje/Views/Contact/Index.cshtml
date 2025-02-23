@@ -1,0 +1,81 @@
+﻿@model SendMessageDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<!-- about breadcrumb -->
+<section class="w3l-about-breadcrumb text-left">
+    <div class="breadcrumb-bg breadcrumb-bg-about py-sm-5 py-4">
+        <div class="container py-2">
+            <h2 class="title">Bize Ulaşın</h2>
+            <ul class="breadcrumbs-custom-path mt-2">
+                <li><a href="/Default/Index/">Ana Sayfa</a></li>
+                <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> İletişim Sayfası </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- //about breadcrumb -->
+<!-- contact-form -->
+<section class="w3l-contact" id="contact">
+    <div class="contact-infubd py-5">
+        <div class="container py-lg-3">
+            <div class="contact-grids row">
+                <div class="col-lg-6 contact-left">
+                    <div class="partners">
+                        <div class="cont-details">
+                            <h5>İletişim Bilgilerimiz</h5>
+                            <p class="mt-3 mb-4">
+                                Merhaba, sevgili gezgin! Bize 7/24 whatsapp, mail, mesaj gibi iletişim ağları üzerinden ulaşabilirsin! 
+                            </p>
+                        </div>
+                        <div class="hours">
+                            <h6 class="mt-4">Mail Adresimiz:</h6>
+                            <p>
+                                <a href="mailto:traversalnetproje@gmail.com">
+                                    traversalnetproje@gmail.com
+                                </a>
+                            </p>
+                            <h6 class="mt-4">Ofisimiz: </h6>
+                            <p> Zühtüpasa, Recep Peker Cd. No:3 D:1, 34724 Kadıköy/İstanbul</p>
+                            <h6 class="mt-4">Telefon:</h6>
+                            <p class="margin-top"><a href="tel:+90 1907 19 07">+90 1907 19 07</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-lg-0 mt-5 contact-right">
+                    <form  method="post" class="signin-form">
+                        <div class="input-grids">
+                            <div class="form-group">
+                                <input type="text"  placeholder="Adınız*" asp-for="Name" class="contact-input" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="email"  placeholder="Mail Adresiniz*" asp-for="Mail" class="contact-input" required="" />
+                                <span asp-validation-for="Mail" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text"  placeholder="Konu*" asp-for="Subject" class="contact-input" />
+                                <span asp-validation-for="Subject" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Mesaj İçeriğiniz*" asp-for="MessageBody" required=""></textarea>
+                            <span asp-validation-for="MessageBody" class="text-danger"></span>
+                        </div>
+                        <div class="text-right">
+                            <button class="btn btn-style btn-primary">Mesajı Gönder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="map mt-5 pt-md-5">
+            <h5>Loaksyonumuz</h5>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d895.3909014193257!2d29.03679594015996!3d40.987524154783735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x14cab870784d1389%3A0x2bf4921764859e70!2zWsO8aHTDvHBhxZ9hLCBSZWNlcCBQZWtlciBDZC4gTm86MyBEOjEsIDM0NzI0IEthZMSxa8O2eS_EsHN0YW5idWw!3m2!1d40.9876722!2d29.0368903!5e0!3m2!1str!2str!4v1740336262488!5m2!1str!2str"
+                    style="border:0" allowfullscreen=""></iframe>
+        </div>
+    </div>
+</section>
+<!-- /contact-form -->
