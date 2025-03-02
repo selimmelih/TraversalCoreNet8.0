@@ -11,9 +11,9 @@ namespace SignalRApiForMsSql.Hubs
         {
             _visitorService = visitorService;
         }
-        public async Task GetVisitorList()
+        public async Task GetVisitorList() // signalrconsume invoke metodu buraya geliyor
         {
-            await Clients.All.SendAsync("CallVisitList", "_visitorService.GetVisitorChartList()");
+            await Clients.All.SendAsync("ReceiveVisitorList", _visitorService.GetVisitorChartList());
         }
     }
 }
