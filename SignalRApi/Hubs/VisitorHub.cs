@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using SignalRApi.Models;
+using SignalRApi.Model;
 
 namespace SignalRApi.Hubs
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SignalRApi.DAL;
 using SignalRApi.Hubs;
 
-namespace SignalRApi.Models
+namespace SignalRApi.Model
 {
     public class VisitorService
     {

@@ -1,4 +1,4 @@
-﻿namespace SignalRApi.Models
+﻿namespace SignalRApi.Model
 {
     public class VisitorChart
     {

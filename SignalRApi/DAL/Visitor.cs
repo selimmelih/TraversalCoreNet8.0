@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SignalRApi.DAL
+﻿namespace SignalRApi.DAL
 {
     public enum Ecity
     {

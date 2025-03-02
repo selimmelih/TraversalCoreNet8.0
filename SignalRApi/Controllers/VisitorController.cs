@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalRApi.DAL;
-using SignalRApi.Models;
+using SignalRApi.Model;
 
 namespace SignalRApi.Controllers
 {

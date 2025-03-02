@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SignalRApi.DAL;
 using SignalRApi.Hubs;
-using SignalRApi.Models;
+using SignalRApi.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
