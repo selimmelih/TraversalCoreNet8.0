@@ -25,10 +25,10 @@ builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddLogging(x =>
 {
-	x.ClearProviders();
-	x.SetMinimumLevel(LogLevel.Debug);
-	x.AddDebug();
-	x.AddFile($"{Directory.GetCurrentDirectory()}\\LogFile\\log.txt", LogLevel.Debug);
+    x.ClearProviders();
+    x.SetMinimumLevel(LogLevel.Debug);
+    x.AddDebug();
+    x.AddFile($"{Directory.GetCurrentDirectory()}\\LogFile\\log.txt", LogLevel.Debug);
 });
 
 // var app e kadar olan kýsým identity auth ile ilgili önemli bir kýsým.
@@ -36,7 +36,7 @@ builder.Services.AddDbContext<Context>();
 
 builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>()
     .AddEntityFrameworkStores<Context>()
-	.AddDefaultTokenProviders();
+    .AddDefaultTokenProviders();
 
 builder.Services.AddHttpClient();
 
@@ -52,21 +52,25 @@ builder.Services.AddControllersWithViews().AddFluentValidation();
 // Add Authorization Policy for authenticated users
 builder.Services.AddMvc(options =>
 {
-	var policy = new AuthorizationPolicyBuilder()
-		.RequireAuthenticatedUser()
-		.Build();
-	options.Filters.Add(new AuthorizeFilter(policy));
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
 });
 
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.LoginPath = "/Login/SignIn/";
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
 app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");
@@ -79,8 +83,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Login}/{action=SignIn}/{id?}");
+    name: "default",
+    pattern: "{controller=Login}/{action=SignIn}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
