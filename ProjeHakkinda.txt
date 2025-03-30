@@ -1,0 +1,16 @@
+Kullanýlan Design Patternlar
+
+
+1-> Repository
+2-> CQRS
+3-> MediatR
+4->Unit Of Work (Savechanges i ayrý sýnýf ve metodda tanýmlamak)
+5->SignalR kullanýmý hem pgsql hem mssql
+( MS SQL SignalR icin yazýlan pivottable sorgusu 
+"""
+
+Select tarih,[1],[2],[3],[4],[5] from (Select [City],CityVisitCount, Cast([VisitDate] as Date)
+as tarih from Visitors) as visitTable Pivot(Sum(CityVisitCount) for City in([1],[2],[3],[4],[5])) as pivottable order by tarih asc
+
+"""
+)
