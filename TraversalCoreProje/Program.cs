@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using TraversalCoreProje.CQRS.Handlers.DestinationHandlers;
 using TraversalCoreProje.Models;
@@ -49,6 +50,11 @@ builder.Services.CustomerValidator();
 // Add MVC support (with controllers and views)
 builder.Services.AddControllersWithViews().AddFluentValidation();
 
+builder.Services.AddLocalization(opt =>
+{
+    opt.ResourcesPath = "Resources";
+});
+
 // Add Authorization Policy for authenticated users
 builder.Services.AddMvc(options =>
 {
@@ -56,11 +62,13 @@ builder.Services.AddMvc(options =>
         .RequireAuthenticatedUser()
         .Build();
     options.Filters.Add(new AuthorizeFilter(policy));
-});
+}).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/Login/SignIn/";
+    opt.AccessDeniedPath = "/Login/AccessDenied"; // Optionally add an access denied path
+
 });
 
 var app = builder.Build();
@@ -81,6 +89,10 @@ app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();
+
+var supportedCultures = new[] { "en", "fr", "es", "gr", "tr" ,"de"};
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[4]).AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
 
 app.MapControllerRoute(
     name: "default",
