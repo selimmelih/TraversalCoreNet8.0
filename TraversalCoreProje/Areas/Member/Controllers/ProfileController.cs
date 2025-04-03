@@ -1,4 +1,5 @@
-﻿using EntityLayer.Concrete;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TraversalCoreProje.Areas.Member.Models;
@@ -50,6 +51,10 @@ namespace TraversalCoreProje.Areas.Member.Controllers
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
+                // Kullanıcı bilgilerini güncelledikten sonra tekrar ViewData'ya aktarabiliriz
+                ViewData["UserName"] = user.Name + " " + user.Surname;
+                ViewData["UserImageUrl"] = user.ImageUrl;
+
                 return RedirectToAction("SignIn", "Login");
             }
             return View();

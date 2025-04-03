@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,7 +10,7 @@ namespace TraversalCoreProje.Areas.Member.Controllers
 {
     [Area("Member")]
     [Route("Member/[controller]/[action]")]//yönlendirmeyi yaptık calisti güzel bu kod
-
+    [Authorize]
     public class ReservationController : Controller
     {
         DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
@@ -61,6 +62,11 @@ namespace TraversalCoreProje.Areas.Member.Controllers
             p.Status = "Onay Bekliyor";
             reservationManager.TAdd(p);
             return RedirectToAction("MyCurrentReservation");
+        }
+
+        public IActionResult Deneme()
+        {
+            return View();
         }
     }
 }
