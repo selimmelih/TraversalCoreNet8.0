@@ -86,13 +86,19 @@ app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404/", "?code={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();
+
+
+var supportedCultures = new[] { "en", "fr", "es", "gr", "tr", "de" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("tr") // Varsayýlan kültür "tr"
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
+
+
 app.UseRouting();
 
 app.UseAuthorization();
-
-var supportedCultures = new[] { "en", "fr", "es", "gr", "tr" ,"de"};
-var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[4]).AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
-app.UseRequestLocalization(localizationOptions);
 
 app.MapControllerRoute(
     name: "default",
