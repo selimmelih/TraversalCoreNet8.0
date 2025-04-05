@@ -35,7 +35,7 @@ builder.Services.AddLogging(x =>
 // var app e kadar olan kýsým identity auth ile ilgili önemli bir kýsým.
 builder.Services.AddDbContext<Context>();
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>()
+builder.Services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).AddEntityFrameworkStores<Context>()
     .AddEntityFrameworkStores<Context>()
     .AddDefaultTokenProviders();
 
