@@ -33,6 +33,15 @@ namespace BusinessLayer.Container
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IAppUserDal, EfAppUserDal>();
 
+            services.AddScoped<IFeatureService, FeatureManager>();
+            services.AddScoped<IFeatureDal, EfFeatureDal>();
+
+            services.AddScoped<ISubAboutService, SubAboutManager>();
+            services.AddScoped<ISubAboutDal, EfSubAboutDal>();            
+            
+            services.AddScoped<ITestimonialService, TestimonialManager>();
+            services.AddScoped<ITestimonialDal, EfTestimonialDal>();
+
             services.AddScoped<IReservationService, ReservationManager>();
             services.AddScoped<IReservationDal, EFReservationDal > ();
 

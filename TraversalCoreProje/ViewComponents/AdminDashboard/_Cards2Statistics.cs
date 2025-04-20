@@ -5,7 +5,13 @@ namespace TraversalCoreProje.ViewComponents.AdminDashboard
 {
     public class _Cards2Statistics : ViewComponent
     {
-        Context c = new Context();
+        private readonly Context _context;
+
+        public _Cards2Statistics(Context context)
+        {
+            _context = context;
+        }
+
         public IViewComponentResult Invoke()
         {
 

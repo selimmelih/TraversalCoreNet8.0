@@ -6,11 +6,18 @@ namespace TraversalCoreProje.ViewComponents.Default
 {
     public class _Statistics:ViewComponent
     {
+        private readonly Context _context;
+
+        public _Statistics(Context context)
+        {
+            _context = context;
+        }
+
         public IViewComponentResult Invoke()
         {
-            using var c = new Context();
-            ViewBag.v1 = c.Destinations.Count();
-            ViewBag.v2 = c.Guides.Count();
+            
+            ViewBag.v1 = _context.Destinations.Count();
+            ViewBag.v2 = _context.Guides.Count();
             ViewBag.v3 = "285";
             return View();
         }

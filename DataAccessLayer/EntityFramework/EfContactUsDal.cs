@@ -8,31 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DataAccessLayer.EntityFramework
 {
     public class EfContactUsDal : GenericRepository<ContactUs>, IContactUsDal
     {
+        private readonly Context _context;
+
+        public EfContactUsDal(Context context) : base(context)
+        {
+            _context = context;
+        }
+
         public void ContactUsStatusChangeToFalse(int id)
         {
-            throw new NotImplementedException();
+            var contact = _context.ContactUses.FirstOrDefault(x => x.ContactUsID == id);
+            if (contact != null)
+            {
+                contact.MessageStatus = false;
+                _context.SaveChanges();
+            }
         }
 
         public List<ContactUs> GetListContactUsByFalse()
         {
-            using (var context = new Context())
-            {
-                var values = context.ContactUses.Where(x=>x.MessageStatus == false).ToList();
-                return values;
-            }
+            return _context.ContactUses.Where(x => x.MessageStatus == false).ToList();
         }
 
         public List<ContactUs> GetListContactUsByTrue()
         {
-            using (var context = new Context())
-            {
-                var values = context.ContactUses.Where(x => x.MessageStatus == true).ToList();
-                return values;
-            }
+            return _context.ContactUses.Where(x => x.MessageStatus == true).ToList();
         }
     }
 }
+
+

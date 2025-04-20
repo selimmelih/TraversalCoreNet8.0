@@ -3,30 +3,29 @@ using DataAccessLayer.Concrete;
 using DataAccessLayer.Repository;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.EntityFramework
 {
     public class EfCommentDal : GenericRepository<Comment>, ICommentDal
     {
+        private readonly Context _context;
+
+        public EfCommentDal(Context context) : base(context)
+        {
+            _context = context;
+        }
+
         public List<Comment> GetListCommentWithDestination()
         {
-            using (var c = new Context())
-            {
-                return c.Comments.Include(x => x.Destination).ToList();
-            }
+            return _context.Comments.Include(x => x.Destination).ToList();
         }
 
         public List<Comment> GetListCommentWithDestinationAndUser(int id)
         {
-            using (var c = new Context())
-            {
-                return c.Comments.Where(x=>x.DestinationID == id).Include(x => x.AppUser).ToList();
-            }
+            return _context.Comments
+                           .Where(x => x.DestinationID == id)
+                           .Include(x => x.AppUser)
+                           .ToList();
         }
     }
 }

@@ -5,7 +5,13 @@ namespace TraversalCoreProje.ViewComponents.AdminDashboard
 {
     public class _TotalRevenue:ViewComponent
     {
-        Context c = new Context();
+        private readonly Context _context;
+
+        public _TotalRevenue(Context context)
+        {
+            _context = context;
+        }
+
         public IViewComponentResult Invoke()
         {
 

@@ -13,21 +13,27 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfDestinationDal : GenericRepository<Destination>, IDestinationDal
     {
+        private readonly Context _context;
+
+        public EfDestinationDal(Context context) : base(context)
+        {
+            _context = context;
+        }
+
         public Destination GetDestinationWithGuide(int id)
         {
-            using (var c = new Context())
-            {
-                return c.Destinations.Where(x => x.DestinationID == id).Include(x => x.Guide).FirstOrDefault();
-            }
+            return _context.Destinations
+                           .Where(x => x.DestinationID == id)
+                           .Include(x => x.Guide)
+                           .FirstOrDefault();
         }
 
         public List<Destination> GetLast4Destinations()
         {
-            using(var c = new Context())
-            {
-                var values = c.Destinations.Take(4).OrderByDescending(x=>x.DestinationID).ToList();
-                return values;
-            }
+            return _context.Destinations
+                           .OrderByDescending(x => x.DestinationID)
+                           .Take(4)
+                           .ToList();
         }
     }
 }

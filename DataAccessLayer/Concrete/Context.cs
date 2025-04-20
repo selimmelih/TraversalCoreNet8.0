@@ -11,7 +11,8 @@ namespace DataAccessLayer.Concrete
 {
     public class Context:IdentityDbContext<AppUser,AppRole,int>
     { //burası bir kalıp gibi düşün 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public Context(DbContextOptions<Context> options) : base(options)
         {
             optionsBuilder.UseSqlServer("Server=SELIMMELIH;database=TraversalDB;integrated security=true;TrustServerCertificate=True");
         }

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
@@ -9,11 +10,16 @@ namespace TraversalCoreProje.Controllers
     [AllowAnonymous]
     public class GuideController : Controller
     {
-        GuideManager guide = new GuideManager(new EfGuideDal());
+        private readonly GuideManager _guideManager;
+
+        public GuideController(IGuideDal guideDal)
+        {
+            _guideManager = new GuideManager(guideDal);
+        }
 
         public IActionResult Index()
         {
-            var values = guide.TGetList();
+            var values = _guideManager.TGetList();
             return View(values);
         }
     }

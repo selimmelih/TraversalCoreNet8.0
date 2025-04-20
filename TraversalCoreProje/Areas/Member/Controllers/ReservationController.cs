@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -9,58 +10,65 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace TraversalCoreProje.Areas.Member.Controllers
 {
     [Area("Member")]
-    [Route("Member/[controller]/[action]")]//yönlendirmeyi yaptık calisti güzel bu kod
+    [Route("Member/[controller]/[action]")]
     [Authorize]
     public class ReservationController : Controller
     {
-        DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
-        ReservationManager reservationManager = new ReservationManager(new EFReservationDal());
-
+        private readonly DestinationManager _destinationManager;
+        private readonly ReservationManager _reservationManager;
         private readonly UserManager<AppUser> _userManager;
 
-        public ReservationController(UserManager<AppUser> userManager)
+        public ReservationController(
+            IDestinationDal destinationDal,
+            IReservationDal reservationDal,
+            UserManager<AppUser> userManager)
         {
+            _destinationManager = new DestinationManager(destinationDal);
+            _reservationManager = new ReservationManager(reservationDal);
             _userManager = userManager;
         }
 
         public async Task<IActionResult> MyCurrentReservation()
         {
-            var values = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            var valuesList = reservationManager.GetListWithReservationByAccepted(values.Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var valuesList = _reservationManager.GetListWithReservationByAccepted(user.Id);
             return View(valuesList);
         }
+
         public async Task<IActionResult> MyOldReservation()
         {
-            var values = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            var valuesList = reservationManager.GetListWithReservationByPrevious(values.Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var valuesList = _reservationManager.GetListWithReservationByPrevious(user.Id);
             return View(valuesList);
         }
+
         public async Task<IActionResult> MyApprovalReservation()
         {
-            var values = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            var valuesList = reservationManager.GetListWithReservationByWaitApproval(values.Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var valuesList = _reservationManager.GetListWithReservationByWaitApproval(user.Id);
             return View(valuesList);
         }
+
         public IActionResult NewReservation()
         {
-            List<SelectListItem> values = (from x in destinationManager.TGetList()
-                                           select new SelectListItem
-                                           {
-                                               Text = x.City,
-                                               Value = x.DestinationID.ToString()
-                                           }).ToList();
+            var values = _destinationManager.TGetList()
+                .Select(x => new SelectListItem
+                {
+                    Text = x.City,
+                    Value = x.DestinationID.ToString()
+                }).ToList();
+
             ViewBag.v = values;
             return View();
         }
+
         [HttpPost]
-        public IActionResult NewReservation(Reservation p)
+        public async Task<IActionResult> NewReservation(Reservation p)
         {
-            p.AppUserId = 4;
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            p.AppUserId = user.Id;
             p.Status = "Onay Bekliyor";
-            reservationManager.TAdd(p);
+            _reservationManager.TAdd(p);
             return RedirectToAction("MyCurrentReservation");
         }
 

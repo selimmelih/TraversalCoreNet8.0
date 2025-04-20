@@ -1,18 +1,24 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TraversalCoreProje.ViewComponents.Default
 {
-    public class _Feature:ViewComponent
+    public class _Feature : ViewComponent
     {
-        FeatureManager featureManager = new FeatureManager(new EfFeatureDal());
+        private readonly FeatureManager _featureManager;
+
+        public _Feature(IFeatureDal featureDal)
+        {
+            _featureManager = new FeatureManager(featureDal);
+        }
+
         public IViewComponentResult Invoke()
         {
-            //var values = featureManager.TGetList();
-            
-            //ViewBag.image1 = featureManager.TGetByID 
-            return View();
+            // Örnek kullanım, istersen ViewBag ile tekil veri de gönderebilirsin.
+            var values = _featureManager.TGetList();
+            return View(values);
         }
     }
 }
