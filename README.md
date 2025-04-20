@@ -1,0 +1,18 @@
+Kullanılan Teknolojiler ve Yaklaşımlar
+-.NET Core 8.0
+- Entity Framework Core
+- N Tier Architecture
+- DTO (Data Transfer Object)
+- Repository Design Pattern
+- Unit Of Work Design Pattern
+- MediatR Design Pattern
+- CQRS (Command Query Responsibility Segregation) Design Pattern
+- Dependency Injection
+- N-Tier Architecture
+- Fluent Validation
+- AutoMapper
+- Rapid API
+- Serilog
+- Identity
+- MSSQL
+- Localization ( Çoklu dil desteği)
